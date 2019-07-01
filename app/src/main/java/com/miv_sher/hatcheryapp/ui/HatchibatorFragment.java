@@ -16,6 +16,7 @@ import com.miv_sher.hatcheryapp.utils.Utils;
 public class HatchibatorFragment extends Fragment {
     private TextView timerTextView;
     private ImageView backgroundImageView;
+    private ImageView eggImageView;
     TextView inspiringTextView;
 
     @Override
@@ -44,6 +45,8 @@ public class HatchibatorFragment extends Fragment {
         inspiringTextView.setText("Никогда не сдавайся!");
         backgroundImageView = view.findViewById(R.id.backgroundImageView);
         Utils.setScaledImage(backgroundImageView, R.drawable.background);
+        eggImageView = view.findViewById(R.id.eggImageView);
+        Utils.setScaledImage(eggImageView, R.drawable.egg);
     }
 
     @Override
