@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">HatcheryApp</string>
+    <string name="title_storage">Магазин</string>
+    <string name="title_hatchibator">Инкубатор</string>
+    <string name="title_collections">Коллекции</string>
+    <string name="title_statistics">Статистика</string>
+</resources>

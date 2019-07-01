@@ -1,6 +1,7 @@
 <resources>
     <string name="app_name">HatcheryApp</string>
-    <string name="title_home">Home</string>
-    <string name="title_dashboard">Dashboard</string>
-    <string name="title_notifications">Notifications</string>
+    <string name="title_storage">Store</string>
+    <string name="title_hatchibator">Hatchibator</string>
+    <string name="title_collections">Collections</string>
+    <string name="title_statistics">Statistics</string>
 </resources>
