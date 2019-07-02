@@ -11,6 +11,8 @@ import android.widget.ImageView;
 
 import com.miv_sher.hatcheryapp.ApplicationLoader;
 
+import java.util.Date;
+
 
 public class Utils {
 
@@ -86,6 +88,10 @@ public class Utils {
         }
 
         return inSampleSize;
+    }
+
+    public static Date getDatePlusMinutes(Date date, int minutes) {
+        return new Date(date.getTime() + minutes * 60 * 1000);
     }
 
 }
