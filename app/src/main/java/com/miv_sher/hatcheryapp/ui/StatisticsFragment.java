@@ -67,7 +67,7 @@ public class StatisticsFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-
+        loadAppList();
     }
 
     @Override

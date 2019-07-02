@@ -5,9 +5,11 @@
     <string name="title_collections">Collections</string>
     <string name="title_statistics">Statistics</string>
 
-    <string name="usage_permission_ask">In order to insure Hatchery runs properly, please turn on the "Access Permission".</string>
+    <string name="usage_permission_ask">In order to insure Hatchery runs properly, please allow us to track what other apps you\'re using.</string>
     <string name="ok">Ok</string>
     <string name="cancel">Cancel</string>
+    <string name="go_to_settings">Settings</string>
+
 
 
 </resources>

@@ -28,7 +28,9 @@ public class UsageStatsUtils {
     private static final SimpleDateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy HH:mm:ss");
     public static final String TAG = UsageStatsUtils.class.getSimpleName();
     public static final String[] WHITELISTED_PACKAGES = {"com.google", "com.miui", "com.qualcomm", "com.qti", "com.google", "com.xiaomi", "com.mi",
-            "com.fingerprints", "com.quicinc", "org.aurora", "org.codeaurora", "org.codeaurora", "com.lbe", "com.android"};
+            "com.fingerprints", "com.quicinc", "org.aurora", "org.codeaurora", "org.codeaurora", "com.lbe", "com.android", "com.meizu"};
+
+    public static final String[] BLACKLISTED_PACKAGES = {"com.android.settings", "com.google.android.gms", "com.miv_sher"};
 
 
     @SuppressWarnings("ResourceType")
@@ -53,11 +55,12 @@ public class UsageStatsUtils {
         List<UsageStats> usageStatsList = getUsageStatsList(startTime);
         String result = "";
         for (UsageStats u : usageStatsList) {
-            if (isPackageWhiteListed(u.getPackageName(), u.getTotalTimeInForeground()))
-                continue;
             Log.d(TAG, "Pkg: " + u.getPackageName() + "\t" + "ForegroundTime: "
                     + u.getTotalTimeInForeground() + "\t" + "LastUsedTime: "
                     + dateFormat.format(u.getLastTimeUsed()));
+
+            if (isPackageWhiteListed(u.getPackageName(), u.getTotalTimeInForeground()))
+                continue;
 
             result += getAppName(u.getPackageName()) + ": " + dateFormat.format(u.getLastTimeUsed()) + " for "
                     + TimeUnit.MILLISECONDS.toSeconds(u.getTotalTimeInForeground()) + " seconds\n\n";
@@ -71,8 +74,10 @@ public class UsageStatsUtils {
         if (foregroundTime == 0)
             return true;
         //if user goes to settings - egg dies
-        if (packageName.equals("com.android.settings"))
-            return false;
+        for (int i = 0; i < BLACKLISTED_PACKAGES.length; i++) {
+            if (packageName.contains(BLACKLISTED_PACKAGES[i]))
+                return false;
+        }
         //for different system processes, which should not kill an egg
         for (int i = 0; i < WHITELISTED_PACKAGES.length; i++) {
             if (packageName.contains(WHITELISTED_PACKAGES[i]))
@@ -83,13 +88,15 @@ public class UsageStatsUtils {
 
     public static void checkAndAskPermission(Activity activity) {
         if (!hasPermission(activity)) {
-            AlertDialog dialog = new AlertDialog.Builder(activity)
+            final AlertDialog dialog = new AlertDialog.Builder(activity)
+                    .setTitle(ApplicationLoader.getContext().getString(R.string.app_name))
                     .setMessage(activity.getString(R.string.usage_permission_ask))
-                    .setPositiveButton(activity.getString(R.string.ok), new DialogInterface.OnClickListener() {
+                    .setPositiveButton(activity.getString(R.string.go_to_settings), new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
                             Intent intent = new Intent(Settings.ACTION_USAGE_ACCESS_SETTINGS);
                             ApplicationLoader.getContext().startActivity(intent);
+                            dialog.cancel();
                         }
                     })
                     .setNegativeButton(activity.getString(R.string.cancel), new DialogInterface.OnClickListener() {
@@ -102,11 +109,10 @@ public class UsageStatsUtils {
             dialog.setOnShowListener(new DialogInterface.OnShowListener() {
                 @Override
                 public void onShow(DialogInterface arg0) {
-
+                    dialog.getButton(AlertDialog.BUTTON_NEGATIVE).setTextColor(ApplicationLoader.getContext().getResources().getColor(R.color.colorPrimary));
+                    dialog.getButton(AlertDialog.BUTTON_POSITIVE).setTextColor(ApplicationLoader.getContext().getResources().getColor(R.color.colorPrimary));
                 }
             });
-            dialog.getButton(AlertDialog.BUTTON_NEGATIVE).setTextColor(activity.getResources().getColor(R.color.colorPrimary));
-            dialog.getButton(AlertDialog.BUTTON_POSITIVE).setTextColor(activity.getResources().getColor(R.color.colorPrimary));
             dialog.show();
         }
     }
