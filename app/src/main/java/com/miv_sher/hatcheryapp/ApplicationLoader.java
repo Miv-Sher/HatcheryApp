@@ -48,8 +48,8 @@ public class ApplicationLoader extends Application {
         super.onCreate();
         instance = this;
         mContext = getApplicationContext();
-        Stetho.initializeWithDefaults(this);
-        Fabric.with(this, new Crashlytics());
+  //      Stetho.initializeWithDefaults(this);
+//        Fabric.with(this, new Crashlytics());
         addRestartServiceReceiver();
         lifecycleHandler = new LifecycleHandler();
         lifecycleHandler.setListener(lifecycleHandlerListener);

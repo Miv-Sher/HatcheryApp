@@ -5,4 +5,9 @@
     <string name="title_hatchibator">Инкубатор</string>
     <string name="title_collections">Коллекции</string>
     <string name="title_statistics">Статистика</string>
+
+    <string name="usage_permission_ask">Чтобы обеспечить правильную работу приложения, пожалуйста, разрешите нам доступ к информации об использовании приложений.</string>
+    <string name="ok">Ок</string>
+    <string name="cancel">Отмена</string>
+
 </resources>

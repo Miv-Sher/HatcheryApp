@@ -14,4 +14,8 @@
     <color name="iron">#CCCCCC</color>
     <color name="white">#FFFFFF</color>
     <color name="white_with_alpha">#80ffffff</color>
+
+    <color name="transparent">#00000000</color>
+    <color name="transparent_light">#1Acccccc</color>
+    <color name="transparent_dark">#1A000000</color>
 </resources>

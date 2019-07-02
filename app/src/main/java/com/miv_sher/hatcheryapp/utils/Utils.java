@@ -1,5 +1,7 @@
 package com.miv_sher.hatcheryapp.utils;
 
+import android.content.pm.ApplicationInfo;
+import android.content.pm.PackageManager;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -7,8 +9,21 @@ import android.os.Handler;
 import android.view.ViewTreeObserver;
 import android.widget.ImageView;
 
+import com.miv_sher.hatcheryapp.ApplicationLoader;
+
 
 public class Utils {
+
+    public static String getAppName(String packageName) {
+        final PackageManager pm = ApplicationLoader.getContext().getPackageManager();
+        ApplicationInfo ai;
+        try {
+            ai = pm.getApplicationInfo(packageName, 0);
+        } catch (final PackageManager.NameNotFoundException e) {
+            ai = null;
+        }
+        return (String) (ai != null ? pm.getApplicationLabel(ai) : packageName);
+    }
 
     public static void setScaledImage(ImageView imageView, final int resId) {
         Handler handler = new Handler();
