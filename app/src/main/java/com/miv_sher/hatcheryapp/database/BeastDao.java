@@ -18,10 +18,10 @@ public interface BeastDao {
     void insertAll(List<BeastEntity> beastEntityList);
 
     @Delete
-    void deleteEgg(BeastEntity beastEntity);
+    void deleteBeast(BeastEntity beastEntity);
 
     @Query("SELECT * FROM beasts WHERE `key` = :beastKey")
-    SessionEntity getBeastByKey(String beastKey);
+    BeastEntity getBeastByKey(String beastKey);
 
     @Query("SELECT * FROM beasts ORDER BY `key` DESC")
     LiveData<List<BeastEntity>> getAll();

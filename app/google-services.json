@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "1077987468255",
+    "firebase_url": "https://hatcheryapp.firebaseio.com",
+    "project_id": "hatcheryapp",
+    "storage_bucket": "hatcheryapp.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1077987468255:android:7f0c2fe85d7c8863",
+        "android_client_info": {
+          "package_name": "com.miv_sher.hatcheryapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1077987468255-j9dkn9c7972nlfgt6dro9o8fvt0k09u1.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.miv_sher.hatcheryapp",
+            "certificate_hash": "b22d43b6a83a68488cb5f753eafa2f36d9a2e369"
+          }
+        },
+        {
+          "client_id": "1077987468255-qq297cuofirpio8emttfnmijrbnl09k3.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCe9FgDxHYb4e9hcgZTCtAP_I5Rg3n9qog"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1077987468255-qq297cuofirpio8emttfnmijrbnl09k3.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

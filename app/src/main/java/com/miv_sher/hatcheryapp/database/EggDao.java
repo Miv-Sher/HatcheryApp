@@ -21,7 +21,10 @@ public interface EggDao {
     void deleteEgg(EggEntity eggEntity);
 
     @Query("SELECT * FROM eggs WHERE `key` = :eggKey")
-    SessionEntity getEggByKey(String eggKey);
+    EggEntity getEggByKey(String eggKey);
+
+    @Query("SELECT * FROM eggs WHERE `boughtCount` > 0")
+    LiveData<List<EggEntity>> getBoughtEggs();
 
     @Query("SELECT * FROM eggs ORDER BY `key` DESC")
     LiveData<List<EggEntity>> getAll();

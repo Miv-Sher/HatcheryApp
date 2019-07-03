@@ -1,9 +1,12 @@
 package com.miv_sher.hatcheryapp.database;
 
+import androidx.annotation.NonNull;
 import androidx.room.Entity;
+import androidx.room.PrimaryKey;
 
 @Entity(tableName = "eggs")
 public class EggEntity {
+    @PrimaryKey @NonNull
     private String key;
     private int resId;
     private int boughtCount;

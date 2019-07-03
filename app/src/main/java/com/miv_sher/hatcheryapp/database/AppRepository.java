@@ -12,6 +12,8 @@ import java.util.concurrent.Executors;
 
 public class AppRepository {
     public LiveData<List<SessionEntity>> mSessions;
+    public LiveData<List<EggEntity>> mEggs;
+    public LiveData<List<BeastEntity>> mBeasts;
 
     private static AppRepository ourInstance;
     private AppDatabase mDb;

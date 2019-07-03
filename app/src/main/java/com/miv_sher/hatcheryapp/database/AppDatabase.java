@@ -7,7 +7,7 @@ import androidx.room.Room;
 import androidx.room.RoomDatabase;
 import androidx.room.TypeConverters;
 
-@Database(entities = {SessionEntity.class}, version = 1)
+@Database(entities = {SessionEntity.class, EggEntity.class, BeastEntity.class}, version = 1)
 @TypeConverters(DateConverter.class)
 
 public abstract class AppDatabase extends RoomDatabase {
@@ -16,6 +16,9 @@ public abstract class AppDatabase extends RoomDatabase {
     private static final Object LOCK = new Object();
 
     public abstract SessionDao sessionDao();
+    public abstract EggDao eggDao();
+    public abstract BeastDao beastDao();
+
 
     public static AppDatabase getInstance(Context context){
         if(instance == null){
