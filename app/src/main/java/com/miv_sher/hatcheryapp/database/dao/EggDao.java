@@ -1,4 +1,4 @@
-package com.miv_sher.hatcheryapp.database;
+package com.miv_sher.hatcheryapp.database.dao;
 
 import androidx.lifecycle.LiveData;
 import androidx.room.Dao;
@@ -7,27 +7,29 @@ import androidx.room.Insert;
 import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
 
+import com.miv_sher.hatcheryapp.database.entities.Egg;
+
 import java.util.List;
 
 @Dao
 public interface EggDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    void insertEgg(EggEntity eggEntity);
+    void insertEgg(Egg egg);
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    void insertAll(List<EggEntity> eggEntityList);
+    void insertAll(List<Egg> eggList);
 
     @Delete
-    void deleteEgg(EggEntity eggEntity);
+    void deleteEgg(Egg egg);
 
     @Query("SELECT * FROM eggs WHERE `key` = :eggKey")
-    EggEntity getEggByKey(String eggKey);
+    Egg getEggByKey(String eggKey);
 
     @Query("SELECT * FROM eggs WHERE `boughtCount` > 0")
-    LiveData<List<EggEntity>> getBoughtEggs();
+    LiveData<List<Egg>> getBoughtEggs();
 
     @Query("SELECT * FROM eggs ORDER BY `key` DESC")
-    LiveData<List<EggEntity>> getAll();
+    LiveData<List<Egg>> getAll();
 
     @Query("DELETE FROM eggs")
     int deleteAll();

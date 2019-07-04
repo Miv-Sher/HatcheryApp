@@ -1,4 +1,4 @@
-package com.miv_sher.hatcheryapp.database;
+package com.miv_sher.hatcheryapp.database.entities;
 
 import androidx.room.Entity;
 import androidx.room.Ignore;
@@ -7,7 +7,7 @@ import androidx.room.PrimaryKey;
 import java.util.Date;
 
 @Entity(tableName = "sessions")
-public class SessionEntity {
+public class Session {
     @PrimaryKey(autoGenerate = true)
     private int id;
     private Date startDate;
@@ -18,10 +18,10 @@ public class SessionEntity {
     private String beastType;
 
     @Ignore
-    public SessionEntity() {
+    public Session() {
     }
 
-    public SessionEntity(int id, Date startDate, Date endDate, String eggKey, boolean wasResultShown, boolean isHatcherySucceed, String beastType) {
+    public Session(int id, Date startDate, Date endDate, String eggKey, boolean wasResultShown, boolean isHatcherySucceed, String beastType) {
         this.id = id;
         this.startDate = startDate;
         this.endDate = endDate;
@@ -32,7 +32,7 @@ public class SessionEntity {
     }
 
     @Ignore
-    public SessionEntity(Date startDate, Date endDate, String eggKey) {
+    public Session(Date startDate, Date endDate, String eggKey) {
         this.startDate = startDate;
         this.endDate = endDate;
         this.eggKey = eggKey;
@@ -80,7 +80,7 @@ public class SessionEntity {
 
     @Override
     public String toString() {
-        return "SessionEntity{" +
+        return "Session{" +
                 "id=" + id +
                 ", startdate=" + startDate +
                 ", endDate=" + endDate + ", eggKey='" + eggKey + '\'' +

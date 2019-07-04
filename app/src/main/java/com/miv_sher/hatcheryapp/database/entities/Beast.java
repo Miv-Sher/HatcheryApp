@@ -1,17 +1,17 @@
-package com.miv_sher.hatcheryapp.database;
+package com.miv_sher.hatcheryapp.database.entities;
 
 import androidx.annotation.NonNull;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
 @Entity(tableName = "beasts")
-public class BeastEntity {
+public class Beast {
     @PrimaryKey @NonNull
     private String key;
     private int resId;
     private String description;
 
-    public BeastEntity(String key, int resId, String description) {
+    public Beast(String key, int resId, String description) {
         this.key = key;
         this.resId = resId;
         this.description = description;
@@ -31,7 +31,7 @@ public class BeastEntity {
 
     @Override
     public String toString() {
-        return "BeastEntity{" +
+        return "Beast{" +
                 "key=" + key +
                 ", resId=" + resId + ", descroption=" + description + '\'' +
                 '}';

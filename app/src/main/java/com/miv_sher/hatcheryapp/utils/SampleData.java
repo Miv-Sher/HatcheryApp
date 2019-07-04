@@ -1,8 +1,8 @@
 package com.miv_sher.hatcheryapp.utils;
 
-import com.miv_sher.hatcheryapp.database.BeastEntity;
-import com.miv_sher.hatcheryapp.database.EggEntity;
-import com.miv_sher.hatcheryapp.database.SessionEntity;
+import com.miv_sher.hatcheryapp.database.entities.Beast;
+import com.miv_sher.hatcheryapp.database.entities.Egg;
+import com.miv_sher.hatcheryapp.database.entities.Session;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -20,28 +20,28 @@ public class SampleData {
     private static String BEAST_KEY_THREE = "beast_key_three";
 
 
-    public static List<SessionEntity> getSessions() {
-        List<SessionEntity> sessionEntityList = new ArrayList<>();
+    public static List<Session> getSessions() {
+        List<Session> sessionList = new ArrayList<>();
         Date nowDate = new Date();
-        sessionEntityList.add(new SessionEntity(nowDate, getDatePlusMinutes(nowDate, 20), EGG_KEY_ONE));
-        sessionEntityList.add(new SessionEntity(getDatePlusMinutes(nowDate, 30), getDatePlusMinutes(nowDate, 50), EGG_KEY_TWO));
-        sessionEntityList.add(new SessionEntity(getDatePlusMinutes(nowDate, 90), getDatePlusMinutes(nowDate, 15), EGG_KEY_THREE));
-        return sessionEntityList;
+        sessionList.add(new Session(nowDate, getDatePlusMinutes(nowDate, 20), EGG_KEY_ONE));
+        sessionList.add(new Session(getDatePlusMinutes(nowDate, 30), getDatePlusMinutes(nowDate, 50), EGG_KEY_TWO));
+        sessionList.add(new Session(getDatePlusMinutes(nowDate, 90), getDatePlusMinutes(nowDate, 15), EGG_KEY_THREE));
+        return sessionList;
     }
 
-    public static List<BeastEntity> getBeasts() {
-        List<BeastEntity> beastEntityList = new ArrayList<>();
-        beastEntityList.add(new BeastEntity(BEAST_KEY_ONE, 0, BEAST_KEY_ONE));
-        beastEntityList.add(new BeastEntity(BEAST_KEY_TWO, 0, BEAST_KEY_TWO));
-        beastEntityList.add(new BeastEntity(BEAST_KEY_THREE, 0, BEAST_KEY_THREE));
-        return beastEntityList;
+    public static List<Beast> getBeasts() {
+        List<Beast> beastList = new ArrayList<>();
+        beastList.add(new Beast(BEAST_KEY_ONE, 0, BEAST_KEY_ONE));
+        beastList.add(new Beast(BEAST_KEY_TWO, 0, BEAST_KEY_TWO));
+        beastList.add(new Beast(BEAST_KEY_THREE, 0, BEAST_KEY_THREE));
+        return beastList;
     }
 
-    public static List<EggEntity> getEggs() {
-        List<EggEntity> eggsEntityList = new ArrayList<>();
-        eggsEntityList.add(new EggEntity(BEAST_KEY_ONE, 0, 3));
-        eggsEntityList.add(new EggEntity(BEAST_KEY_TWO, 0, 0));
-        eggsEntityList.add(new EggEntity(BEAST_KEY_THREE, 0, 1));
+    public static List<Egg> getEggs() {
+        List<Egg> eggsEntityList = new ArrayList<>();
+        eggsEntityList.add(new Egg(BEAST_KEY_ONE, 0, 3));
+        eggsEntityList.add(new Egg(BEAST_KEY_TWO, 0, 0));
+        eggsEntityList.add(new Egg(BEAST_KEY_THREE, 0, 1));
         return eggsEntityList;
     }
 

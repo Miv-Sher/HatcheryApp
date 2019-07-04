@@ -1,4 +1,4 @@
-package com.miv_sher.hatcheryapp.database;
+package com.miv_sher.hatcheryapp.database.dao;
 
 import androidx.lifecycle.LiveData;
 import androidx.room.Dao;
@@ -7,24 +7,26 @@ import androidx.room.Insert;
 import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
 
+import com.miv_sher.hatcheryapp.database.entities.Session;
+
 import java.util.List;
 
 @Dao
 public interface SessionDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    void insertSession(SessionEntity sessionEntity);
+    void insertSession(Session session);
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    void insertAll(List<SessionEntity> sessionEntityList);
+    void insertAll(List<Session> sessionList);
 
     @Delete
-    void deleteSession(SessionEntity sessionEntity);
+    void deleteSession(Session session);
 
     @Query("SELECT * FROM sessions WHERE id = :id")
-    SessionEntity getSessionByID(int id);
+    Session getSessionByID(int id);
 
     @Query("SELECT * FROM sessions ORDER BY startDate DESC")
-    LiveData<List<SessionEntity>> getAll();
+    LiveData<List<Session>> getAll();
 
     @Query("DELETE FROM sessions")
     int deleteAll();

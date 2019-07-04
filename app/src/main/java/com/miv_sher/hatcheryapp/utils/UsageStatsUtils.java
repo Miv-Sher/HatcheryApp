@@ -53,13 +53,13 @@ public class UsageStatsUtils {
 
     public static String getUsageStatsString(long startTime) {
         List<UsageStats> usageStatsList = getUsageStatsList(startTime);
-        String result = "";
+        String result = "Range start: " + dateFormat.format(startTime) + "\n" + "Range end:" + dateFormat.format(Calendar.getInstance().getTimeInMillis())  + "\n\n";
         for (UsageStats u : usageStatsList) {
             Log.d(TAG, "Pkg: " + u.getPackageName() + "\t" + "ForegroundTime: "
                     + u.getTotalTimeInForeground() + "\t" + "LastUsedTime: "
                     + dateFormat.format(u.getLastTimeUsed()));
 
-            if (isPackageWhiteListed(u.getPackageName(), u.getTotalTimeInForeground()))
+            if (isPackageWhiteListed(u, startTime))
                 continue;
 
             result += getAppName(u.getPackageName()) + ": " + dateFormat.format(u.getLastTimeUsed()) + " for "
@@ -69,18 +69,21 @@ public class UsageStatsUtils {
         return result;
     }
 
-    private static boolean isPackageWhiteListed(String packageName, long foregroundTime) {
+    private static boolean isPackageWhiteListed(UsageStats usageStats, long startTime) {
         //for background services, which launch without user actions
-        if (foregroundTime == 0)
+        if (usageStats.getTotalTimeInForeground() == 0)
+            return true;
+        //for apps usage before egg put in hatchibator
+        if(usageStats.getLastTimeUsed() < startTime)
             return true;
         //if user goes to settings - egg dies
         for (int i = 0; i < BLACKLISTED_PACKAGES.length; i++) {
-            if (packageName.contains(BLACKLISTED_PACKAGES[i]))
+            if (usageStats.getPackageName().contains(BLACKLISTED_PACKAGES[i]))
                 return false;
         }
         //for different system processes, which should not kill an egg
         for (int i = 0; i < WHITELISTED_PACKAGES.length; i++) {
-            if (packageName.contains(WHITELISTED_PACKAGES[i]))
+            if (usageStats.getPackageName().contains(WHITELISTED_PACKAGES[i]))
                 return true;
         }
         return false;

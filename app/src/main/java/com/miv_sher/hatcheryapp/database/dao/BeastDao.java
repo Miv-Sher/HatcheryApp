@@ -1,4 +1,4 @@
-package com.miv_sher.hatcheryapp.database;
+package com.miv_sher.hatcheryapp.database.dao;
 
 import androidx.lifecycle.LiveData;
 import androidx.room.Dao;
@@ -7,24 +7,26 @@ import androidx.room.Insert;
 import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
 
+import com.miv_sher.hatcheryapp.database.entities.Beast;
+
 import java.util.List;
 
 @Dao
 public interface BeastDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    void insertBeast(BeastEntity beastEntity);
+    void insertBeast(Beast beast);
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    void insertAll(List<BeastEntity> beastEntityList);
+    void insertAll(List<Beast> beastList);
 
     @Delete
-    void deleteBeast(BeastEntity beastEntity);
+    void deleteBeast(Beast beast);
 
     @Query("SELECT * FROM beasts WHERE `key` = :beastKey")
-    BeastEntity getBeastByKey(String beastKey);
+    Beast getBeastByKey(String beastKey);
 
     @Query("SELECT * FROM beasts ORDER BY `key` DESC")
-    LiveData<List<BeastEntity>> getAll();
+    LiveData<List<Beast>> getAll();
 
     @Query("DELETE FROM beasts")
     int deleteAll();

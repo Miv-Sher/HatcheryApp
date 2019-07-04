@@ -7,7 +7,17 @@ import androidx.room.Room;
 import androidx.room.RoomDatabase;
 import androidx.room.TypeConverters;
 
-@Database(entities = {SessionEntity.class, EggEntity.class, BeastEntity.class}, version = 1)
+import com.miv_sher.hatcheryapp.ApplicationLoader;
+import com.miv_sher.hatcheryapp.database.dao.BeastDao;
+import com.miv_sher.hatcheryapp.database.dao.EggDao;
+import com.miv_sher.hatcheryapp.database.dao.ProfileDao;
+import com.miv_sher.hatcheryapp.database.dao.SessionDao;
+import com.miv_sher.hatcheryapp.database.entities.Beast;
+import com.miv_sher.hatcheryapp.database.entities.Egg;
+import com.miv_sher.hatcheryapp.database.entities.Profile;
+import com.miv_sher.hatcheryapp.database.entities.Session;
+
+@Database(entities = {Profile.class, Session.class, Egg.class, Beast.class}, version = 2)
 @TypeConverters(DateConverter.class)
 
 public abstract class AppDatabase extends RoomDatabase {
@@ -18,13 +28,14 @@ public abstract class AppDatabase extends RoomDatabase {
     public abstract SessionDao sessionDao();
     public abstract EggDao eggDao();
     public abstract BeastDao beastDao();
+    public abstract ProfileDao profileDao();
 
 
-    public static AppDatabase getInstance(Context context){
+    public static AppDatabase getInstance(){
         if(instance == null){
             synchronized (LOCK){
                 if(instance == null){
-                    instance = Room.databaseBuilder(context.getApplicationContext(), AppDatabase.class, DATABASE_NAME).build();
+                    instance = Room.databaseBuilder(ApplicationLoader.getContext(), AppDatabase.class, DATABASE_NAME).build();
                 }
             }
         }
