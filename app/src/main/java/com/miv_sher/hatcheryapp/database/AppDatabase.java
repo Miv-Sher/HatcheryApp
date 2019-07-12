@@ -16,7 +16,7 @@ import com.miv_sher.hatcheryapp.database.entities.Egg;
 import com.miv_sher.hatcheryapp.database.entities.Profile;
 import com.miv_sher.hatcheryapp.database.entities.Session;
 
-@Database(entities = {Profile.class, Session.class, Egg.class, Beast.class}, version = 4)
+@Database(entities = {Profile.class, Session.class, Egg.class, Beast.class}, version = 5)
 @TypeConverters(DateConverter.class)
 
 public abstract class AppDatabase extends RoomDatabase {
@@ -28,7 +28,8 @@ public abstract class AppDatabase extends RoomDatabase {
         if (instance == null) {
             synchronized (LOCK) {
                 if (instance == null) {
-                    instance = Room.databaseBuilder(ApplicationLoader.getContext(), AppDatabase.class, DATABASE_NAME).build();
+                    //TODO убрать distractiveMigration когда устоится схема бд
+                    instance = Room.databaseBuilder(ApplicationLoader.getContext(), AppDatabase.class, DATABASE_NAME).fallbackToDestructiveMigration().build();
                 }
             }
         }
