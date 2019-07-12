@@ -4,13 +4,17 @@ apply plugin: 'com.google.gms.google-services'
 
 
 android {
-    compileSdkVersion 28
+    compileSdkVersion 29
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
     defaultConfig {
         applicationId "com.miv_sher.hatcheryapp"
         minSdkVersion 21
-        targetSdkVersion 28
+        targetSdkVersion 29
         versionCode 1
-        versionName "1.0"
+        versionName "1.1"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         javaCompileOptions {
             annotationProcessorOptions {
@@ -52,10 +56,14 @@ dependencies {
     def room_version = "2.1.0-alpha07"
     implementation "androidx.room:room-runtime:$room_version"
     annotationProcessor "androidx.room:room-compiler:$room_version"
+    //ButterKnife
+    implementation 'com.jakewharton:butterknife:10.1.0'
+    annotationProcessor 'com.jakewharton:butterknife-compiler:10.1.0'
+    implementation 'com.google.android.material:material:1.0.0'
     //Firebase
     implementation 'com.google.firebase:firebase-core:17.0.0'
     //circular image carousel
-    compile 'com.azoft.carousellayoutmanager:carousel:1.1.5'
+    compile 'com.azoft.carousellayoutmanager:carousel:1.2.4'
 }
 
 configurations.all {

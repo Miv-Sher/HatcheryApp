@@ -5,6 +5,7 @@
     <string name="title_collections">Collections</string>
     <string name="title_statistics">Statistics</string>
 
+    <string name="violated_egg_terms">Sorry! When you turned away for a second, tiny little raccoon stole your egg. But don`t worry! We found out when it happened and got it back. It`s in your vault.</string>
     <string name="usage_permission_ask">In order to insure Hatchery runs properly, please allow us to track what other apps you\'re using.</string>
     <string name="ok">Ok</string>
     <string name="cancel">Cancel</string>
@@ -13,8 +14,10 @@
     <string name="start_egg">Start</string>
     <string name="set_up_hatchibator">Set up hatchibator</string>
     <string name="choose_time_stump">Choose time interval:</string>
+    <string name="ooops">Oooops!</string>
 
     <string-array name="time_intervals">
+        <item>1 minute</item>
         <item>20 minutes</item>
         <item>1 hour</item>
         <item>2 hours</item>

@@ -9,6 +9,8 @@ import android.content.Intent;
 import android.os.Handler;
 
 import com.crashlytics.android.Crashlytics;
+import com.miv_sher.hatcheryapp.database.AppRepository;
+import com.miv_sher.hatcheryapp.database.entities.Profile;
 
 import io.fabric.sdk.android.Fabric;
 
@@ -48,6 +50,7 @@ public class ApplicationLoader extends Application {
         lifecycleHandler.setListener(lifecycleHandlerListener);
         registerActivityLifecycleCallbacks(lifecycleHandler);
         applicationHandler = new Handler(getApplicationContext().getMainLooper());
+        AppRepository.getInstance().addSampleData();
     }
 
     private void addRestartServiceReceiver() {

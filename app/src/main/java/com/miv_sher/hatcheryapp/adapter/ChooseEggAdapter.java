@@ -5,15 +5,18 @@ import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.core.content.res.ResourcesCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.azoft.carousellayoutmanager.CarouselLayoutManager;
 import com.miv_sher.hatcheryapp.R;
+import com.miv_sher.hatcheryapp.database.entities.Egg;
+import com.miv_sher.hatcheryapp.utils.SampleData;
 
+import java.util.List;
 import java.util.Random;
 
 public final class ChooseEggAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
@@ -23,46 +26,35 @@ public final class ChooseEggAdapter extends RecyclerView.Adapter<RecyclerView.Vi
     public int[] mColors;
     public int[] mPosition;
     public Context context;
-    public final int[] image={
-            R.drawable.dragon_one,
-            R.drawable.dragon_two,
-            R.drawable.dragon_three,
-            R.drawable.dragon_four,
-            R.drawable.dragon_five
-    };
-    public final String[] title={
-            "Hasib Prince",
-            "Ifakhar Hossain",
-            "Jin Yean",
-            "Victor 2.0",
-            "Badiuzzaman"
-    };
+    public List<Egg> eggItemList = SampleData.getEggs();
+    CarouselLayoutManager carouselLayoutManager;
 
-
-    public int mItemsCount = 5;
     LayoutInflater inflater;
 
-    public ChooseEggAdapter(Context context) {
-        this.context=context;
-
+    public ChooseEggAdapter(Context context, CarouselLayoutManager carouselLayoutManager) {
+        this.context = context;
         this.inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        mColors = new int[10];
-        mPosition = new int[10];
+        this.carouselLayoutManager = carouselLayoutManager;
+        mColors = new int[eggItemList.size()];
+        mPosition = new int[eggItemList.size()];
 
-        for (int i = 0; 10 > i; ++i) {
+        for (int i = 0; eggItemList.size() > i; ++i) {
             //noinspection MagicNumber
             mColors[i] = Color.argb(255, mRandom.nextInt(256), mRandom.nextInt(256), mRandom.nextInt(256));
             mPosition[i] = i;
-
         }
 
+    }
+
+    public Egg getCenterItem(){
+        return eggItemList.get(carouselLayoutManager.getCenterItemPosition());
     }
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
 
 
-        View view = inflater.inflate( R.layout.choose_egg_item, null) ;
+        View view = inflater.inflate(R.layout.choose_egg_item, null);
         RecyclerView.ViewHolder holder = new RowNewsViewHolder(view);
         return holder;
 
@@ -70,15 +62,14 @@ public final class ChooseEggAdapter extends RecyclerView.Adapter<RecyclerView.Vi
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, final int position) {
-        ((RowNewsViewHolder) holder).cItem1.setText(title[position]);
-
-        ((RowNewsViewHolder) holder).pp.setImageDrawable(ResourcesCompat.getDrawable(context.getResources(), image[position], null));
+        ((RowNewsViewHolder) holder).cItem1.setText(eggItemList.get(position).getDescription());
+        ((RowNewsViewHolder) holder).pp.setImageDrawable(ResourcesCompat.getDrawable(context.getResources(), eggItemList.get(position).getResId(), null));
 
     }
 
     @Override
     public int getItemCount() {
-        return mItemsCount;
+        return eggItemList.size();
     }
 
     public static class RowNewsViewHolder extends RecyclerView.ViewHolder {
@@ -88,9 +79,8 @@ public final class ChooseEggAdapter extends RecyclerView.Adapter<RecyclerView.Vi
 
         public RowNewsViewHolder(View itemView) {
             super(itemView);
-
             cItem1 = (TextView) itemView.findViewById(R.id.c_item_1);
-            pp = (ImageView)itemView.findViewById(R.id.profilePicture);
+            pp = (ImageView) itemView.findViewById(R.id.profilePicture);
         }
     }
 }

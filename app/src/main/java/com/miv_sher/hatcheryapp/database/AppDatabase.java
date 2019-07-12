@@ -1,13 +1,12 @@
 package com.miv_sher.hatcheryapp.database;
 
-import android.content.Context;
-
 import androidx.room.Database;
 import androidx.room.Room;
 import androidx.room.RoomDatabase;
 import androidx.room.TypeConverters;
 
 import com.miv_sher.hatcheryapp.ApplicationLoader;
+import com.miv_sher.hatcheryapp.database.converters.DateConverter;
 import com.miv_sher.hatcheryapp.database.dao.BeastDao;
 import com.miv_sher.hatcheryapp.database.dao.EggDao;
 import com.miv_sher.hatcheryapp.database.dao.ProfileDao;
@@ -17,7 +16,7 @@ import com.miv_sher.hatcheryapp.database.entities.Egg;
 import com.miv_sher.hatcheryapp.database.entities.Profile;
 import com.miv_sher.hatcheryapp.database.entities.Session;
 
-@Database(entities = {Profile.class, Session.class, Egg.class, Beast.class}, version = 2)
+@Database(entities = {Profile.class, Session.class, Egg.class, Beast.class}, version = 4)
 @TypeConverters(DateConverter.class)
 
 public abstract class AppDatabase extends RoomDatabase {

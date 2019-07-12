@@ -5,6 +5,11 @@ import android.content.pm.PackageManager;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.Paint;
+import android.graphics.PorterDuff;
+import android.graphics.PorterDuffColorFilter;
 import android.os.Handler;
 import android.view.ViewTreeObserver;
 import android.widget.ImageView;
@@ -27,7 +32,7 @@ public class Utils {
         return (String) (ai != null ? pm.getApplicationLabel(ai) : packageName);
     }
 
-    public static void setScaledImage(ImageView imageView, final int resId) {
+    public static void setScaledImage(ImageView imageView, final int resId, boolean needTintTiWhite) {
         Handler handler = new Handler();
         final ImageView iv = imageView;
         handler.post(new Runnable() {
@@ -39,9 +44,14 @@ public class Utils {
                         iv.getViewTreeObserver().removeOnPreDrawListener(this);
                         int imageViewHeight = iv.getMeasuredHeight();
                         int imageViewWidth = iv.getMeasuredWidth();
+                        Bitmap bitmap =  decodeSampledBitmapFromResource(iv.getContext().getResources(),
+                                resId, imageViewWidth, imageViewHeight);
+                        if(needTintTiWhite){
+                            bitmap = tintImageToWhite(bitmap);
+                        }
                         iv.setImageBitmap(
-                                decodeSampledBitmapFromResource(iv.getContext().getResources(),
-                                        resId, imageViewWidth, imageViewHeight));
+                                bitmap
+                               );
                         return true;
                     }
                 });
@@ -63,9 +73,18 @@ public class Utils {
 
         // Decode bitmap with inSampleSize set
         options.inJustDecodeBounds = false;
+
         return BitmapFactory.decodeResource(res, resId, options);
     }
 
+    public static Bitmap tintImageToWhite(Bitmap bitmap) {
+        Paint paint = new Paint();
+        paint.setColorFilter(new PorterDuffColorFilter(Color.WHITE, PorterDuff.Mode.SRC_IN));
+        Bitmap bitmapResult = Bitmap.createBitmap(bitmap.getWidth(), bitmap.getHeight(), Bitmap.Config.ARGB_8888);
+        Canvas canvas = new Canvas(bitmapResult);
+        canvas.drawBitmap(bitmap, 0, 0, paint);
+        return bitmapResult;
+    }
     private static int calculateInSampleSize(
             BitmapFactory.Options options, int reqWidth, int reqHeight) {
 

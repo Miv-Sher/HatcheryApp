@@ -9,7 +9,7 @@ import java.util.Date;
 @Entity(tableName = "sessions")
 public class Session {
     @PrimaryKey(autoGenerate = true)
-    private int id;
+    private long id;
     private Date startDate;
     private Date endDate;
     private String eggKey;
@@ -21,7 +21,7 @@ public class Session {
     public Session() {
     }
 
-    public Session(int id, Date startDate, Date endDate, String eggKey, boolean wasResultShown, boolean isHatcherySucceed, String beastType) {
+    public Session(long id, Date startDate, Date endDate, String eggKey, boolean wasResultShown, boolean isHatcherySucceed, String beastType) {
         this.id = id;
         this.startDate = startDate;
         this.endDate = endDate;
@@ -36,6 +36,9 @@ public class Session {
         this.startDate = startDate;
         this.endDate = endDate;
         this.eggKey = eggKey;
+        wasResultShown = false;
+        isHatcherySucceed = false;
+        beastType = null;
     }
 
     public void setWasResultShown(boolean wasResultShown) {
@@ -50,8 +53,12 @@ public class Session {
         this.beastType = beastType;
     }
 
-    public int getId() {
+    public long getId() {
         return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
     }
 
     public Date getStartDate() {

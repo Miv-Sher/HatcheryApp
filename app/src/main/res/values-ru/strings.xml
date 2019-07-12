@@ -6,6 +6,7 @@
     <string name="title_collections">Коллекции</string>
     <string name="title_statistics">Статистика</string>
 
+    <string name="violated_egg_terms">Ой! Маленький крошка енот спер твое яйцо, как только ты отвлекся! Но не волнуйся, мы заметили когда это произошло и забрали его обратно. Яичко уже ждет тебя в твоем хранилище, целое-целехонькое.</string>
     <string name="usage_permission_ask">Чтобы обеспечить правильную работу приложения, пожалуйста, разрешите нам доступ к истории использования приложений.</string>
     <string name="ok">Ок</string>
     <string name="cancel">Отмена</string>
@@ -14,8 +15,10 @@
     <string name="start_egg">Начать</string>
     <string name="set_up_hatchibator">Настройте инкубатор</string>
     <string name="choose_time_stump">Выберите время: </string>
+    <string name="ooops">Ой-ёй!</string>
 
     <string-array name="time_intervals">
+        <item>1 минутa</item>
         <item>20 минут</item>
         <item>1 час</item>
         <item>2 часа</item>

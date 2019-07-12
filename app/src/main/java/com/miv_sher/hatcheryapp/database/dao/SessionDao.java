@@ -14,7 +14,7 @@ import java.util.List;
 @Dao
 public interface SessionDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    void insertSession(Session session);
+    long insertSession(Session session);
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insertAll(List<Session> sessionList);
@@ -23,10 +23,10 @@ public interface SessionDao {
     void deleteSession(Session session);
 
     @Query("SELECT * FROM sessions WHERE id = :id")
-    Session getSessionByID(int id);
+    Session getSessionByID(long id);
 
     @Query("SELECT * FROM sessions ORDER BY startDate DESC")
-    LiveData<List<Session>> getAll();
+    List<Session> getAll();
 
     @Query("DELETE FROM sessions")
     int deleteAll();

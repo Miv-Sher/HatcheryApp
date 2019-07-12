@@ -27,7 +27,7 @@
         android:layout_height="match_parent"
         android:cropToPadding="true"
         android:scaleType="centerCrop"
-        tools:src="@drawable/background" />
+        tools:src="@drawable/background_base" />
 
     <include
         layout="@layout/content_main"

@@ -3,12 +3,10 @@ package com.miv_sher.hatcheryapp.ui;
 import android.app.Dialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.SimpleAdapter;
 import android.widget.Spinner;
 
 import androidx.fragment.app.DialogFragment;
@@ -21,7 +19,10 @@ import com.miv_sher.hatcheryapp.R;
 import com.miv_sher.hatcheryapp.adapter.ChooseEggAdapter;
 import com.miv_sher.hatcheryapp.database.entities.Session;
 
+import java.util.Date;
+
 import static android.widget.AdapterView.INVALID_POSITION;
+import static com.miv_sher.hatcheryapp.utils.TimeUtils.addMinutesToDate;
 
 public class ChooseEggDialog extends DialogFragment implements DialogInterface.OnClickListener {
     RecyclerView eggRecyclerView;
@@ -39,16 +40,37 @@ public class ChooseEggDialog extends DialogFragment implements DialogInterface.O
         getDialog().setTitle("Title!");
         View v = inflater.inflate(R.layout.choose_egg_dialog, null);
 
-        eggAdapter = new ChooseEggAdapter(getActivity());
+        CarouselLayoutManager carouselLayoutManager = new CarouselLayoutManager(CarouselLayoutManager.HORIZONTAL, true);
+        eggAdapter = new ChooseEggAdapter(getActivity(), carouselLayoutManager);
         eggRecyclerView = v.findViewById(R.id.choose_eggs_rv);
-        initRecyclerView(eggRecyclerView, new CarouselLayoutManager(CarouselLayoutManager.HORIZONTAL, false), eggAdapter);
+        initRecyclerView(eggRecyclerView, carouselLayoutManager, eggAdapter);
         timeSpinner = v.findViewById(R.id.spinner);
         startButton = v.findViewById(R.id.startButton);
         startButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(listener != null)
-                    listener.onSessionStarted(new Session());
+                if (listener != null) {
+                    Date startDate = new Date();
+                    int minutes = 20;
+                    switch (timeSpinner.getSelectedItemPosition()) {
+                        case 0:
+                            minutes = 1;
+                            break;
+                        case 1:
+                            minutes = 20;
+                            break;
+                        case 2:
+                            minutes = 60;
+                            break;
+                        case 3:
+                            minutes = 120;
+                            break;
+                        case 4:
+                            minutes = 240;
+                            break;
+                    }
+                    listener.onSessionStarted(new Session(startDate, addMinutesToDate(startDate, minutes), eggAdapter.getCenterItem().getKey()));
+                }
                 dismiss();
             }
         });

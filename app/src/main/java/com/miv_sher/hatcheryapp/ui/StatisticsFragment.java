@@ -43,8 +43,6 @@ public class StatisticsFragment extends Fragment {
     }
 
     private void loadAppList() {
-        String result = "";
-
         checkAndAskPermission(getActivity());
         Date date = new Date();
         String res = UsageStatsUtils.getUsageStatsString(date.getTime() - 10 * 1000 * 60);

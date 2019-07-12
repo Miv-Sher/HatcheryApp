@@ -10,10 +10,10 @@ public class Profile {
     @PrimaryKey(autoGenerate = true)
     public int id;
     public String key;
-    public int currentSessionID;
+    public long currentSessionID;
     public int coinsCount;
 
-    public Profile(int id, String key, int currentSessionID, int coinsCount) {
+    public Profile(int id, String key, long currentSessionID, int coinsCount) {
         this.id = id;
         this.key = key;
         this.currentSessionID = currentSessionID;
@@ -32,7 +32,7 @@ public class Profile {
         return key;
     }
 
-    public int getCurrentSessionID() {
+    public long getCurrentSessionID() {
         return currentSessionID;
     }
 
@@ -44,7 +44,7 @@ public class Profile {
         this.key = key;
     }
 
-    public void setCurrentSession(int currentSessionID) {
+    public void setCurrentSession(long currentSessionID) {
         this.currentSessionID = currentSessionID;
     }
 

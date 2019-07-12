@@ -1,6 +1,5 @@
 package com.miv_sher.hatcheryapp.database;
 
-import android.content.Context;
 import androidx.lifecycle.LiveData;
 
 import com.miv_sher.hatcheryapp.database.entities.Beast;
@@ -18,7 +17,6 @@ public class AppRepository {
     public LiveData<List<Session>> mSessions;
     public LiveData<List<Egg>> mEggs;
     public LiveData<List<Beast>> mBeasts;
-    public LiveData<Profile> mProfile;
 
     private static AppRepository ourInstance;
     private AppDatabase mDb;
@@ -33,20 +31,26 @@ public class AppRepository {
 
     private AppRepository() {
         mDb = AppDatabase.getInstance();
-        mSessions = getAllSessions();
-        mProfile = getProfile();
+        //mSessions = getAllSessions();
     }
 
     public void addSampleData() {
         executor.execute(new Runnable() {
             @Override
             public void run() {
-                mDb.sessionDao().insertAll(SampleData.getSessions());
+                if (AppRepository.getInstance().getProfile() == null)
+                    AppRepository.getInstance().insertProfile(new Profile("phone_imei", -1, 100));
+                if (AppRepository.getInstance().getAllSessions().size() == 0)
+                    mDb.sessionDao().insertAll(SampleData.getSessions());
+                //if (AppRepository.getInstance().getAllEggs().size() == 0)
+                    mDb.eggDao().insertAll(SampleData.getEggs());
+               // if (AppRepository.getInstance().getAllBeasts().size() == 0)
+                    mDb.beastDao().insertAll(SampleData.getBeasts());
             }
         });
     }
 
-    private LiveData<List<Session>> getAllSessions() {
+    private List<Session> getAllSessions() {
         return mDb.sessionDao().getAll();
     }
 
@@ -59,20 +63,28 @@ public class AppRepository {
         });
     }
 
-    public Session getSessionById(int sessionId) {
+    public Session getSessionById(long sessionId) {
         return mDb.sessionDao().getSessionByID(sessionId);
     }
 
-    public void insertNote(final Session session) {
+    /*public Session getCurrentSessionById(int sessionId) {
+        return mDb.sessionDao().getSessionByID(sessionId);
+    }*/
+
+
+    public void insertSession(final Session session) {
         executor.execute(new Runnable() {
             @Override
             public void run() {
-                mDb.sessionDao().insertSession(session);
+                if(session != null) {
+                    long id = mDb.sessionDao().insertSession(session);
+                    session.setId(id);
+                }
             }
         });
     }
 
-    public void deleteNote(final Session session) {
+    public void deleteSession(final Session session) {
         executor.execute(new Runnable() {
             @Override
             public void run() {
@@ -81,11 +93,24 @@ public class AppRepository {
         });
     }
 
-    private LiveData<Profile> getProfile(){
+    public Egg getEggByKey(String key) {
+        return mDb.eggDao().getEggByKey(key);
+    }
+
+    public List<Egg> getAllEggs() {
+        return mDb.eggDao().getAll();
+    }
+
+    public List<Beast> getAllBeasts() {
+        return mDb.beastDao().getAll();
+    }
+
+
+    public Profile getProfile() {
         return mDb.profileDao().getProfile();
     }
 
-    public void insertProfile(final Profile profile){
+    public void insertProfile(final Profile profile) {
         executor.execute(new Runnable() {
             @Override
             public void run() {

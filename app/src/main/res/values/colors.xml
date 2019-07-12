@@ -21,4 +21,11 @@
 
     <color name="cpb_back">#BCAAA4</color>
     <color name="cpb_front">#8bc34a</color>
+
+    <color name="rarity_common">#FFFFFF</color>
+    <color name="rarity_uncommon">#8bc34a</color>
+    <color name="rarity_rare">#1381b0</color>
+    <color name="rarity_legendary">#e69d29</color>
+    <color name="rarity_epic">#9818b8</color>
+
 </resources>

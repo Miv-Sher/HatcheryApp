@@ -29,7 +29,7 @@ public interface EggDao {
     LiveData<List<Egg>> getBoughtEggs();
 
     @Query("SELECT * FROM eggs ORDER BY `key` DESC")
-    LiveData<List<Egg>> getAll();
+    List<Egg> getAll();
 
     @Query("DELETE FROM eggs")
     int deleteAll();

@@ -2,8 +2,6 @@ package com.miv_sher.hatcheryapp.ui;
 
 import android.os.Bundle;
 import android.view.MenuItem;
-import android.view.View;
-import android.view.Window;
 import android.widget.ImageView;
 
 import androidx.annotation.NonNull;
@@ -14,8 +12,10 @@ import androidx.fragment.app.FragmentManager;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.miv_sher.hatcheryapp.R;
 import com.miv_sher.hatcheryapp.database.AppRepository;
-import com.miv_sher.hatcheryapp.database.entities.Profile;
 import com.miv_sher.hatcheryapp.utils.Utils;
+
+import java.util.concurrent.Executor;
+import java.util.concurrent.Executors;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -28,7 +28,6 @@ public class MainActivity extends AppCompatActivity {
     Fragment activeFragment = hatchibatorFragment;
     private ImageView backgroundImageView;
     AppRepository appRepository = AppRepository.getInstance();
-
 
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
@@ -64,7 +63,6 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         navView = findViewById(R.id.nav_view);
         navView.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
-        createProfile();
 
         fragmentManager.beginTransaction().add(R.id.main_container, statisticsFragment, "3").hide(statisticsFragment).commit();
         fragmentManager.beginTransaction().add(R.id.main_container, collectionsFragment, "2").hide(collectionsFragment).commit();
@@ -73,13 +71,6 @@ public class MainActivity extends AppCompatActivity {
         navView.setSelectedItemId(R.id.navigation_hatchibator);
 
         backgroundImageView = findViewById(R.id.backgroundImageView);
-        Utils.setScaledImage(backgroundImageView, R.drawable.background);
+        Utils.setScaledImage(backgroundImageView, R.drawable.background_base, false);
     }
-
-    private void createProfile(){
-        if(appRepository.mProfile == null){
-            appRepository.insertProfile(new Profile("mobile_imei", -1, 50));
-        }
-    }
-
 }

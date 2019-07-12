@@ -19,6 +19,7 @@ import com.miv_sher.hatcheryapp.R;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
@@ -28,9 +29,9 @@ public class UsageStatsUtils {
     private static final SimpleDateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy HH:mm:ss");
     public static final String TAG = UsageStatsUtils.class.getSimpleName();
     public static final String[] WHITELISTED_PACKAGES = {"com.google", "com.miui", "com.qualcomm", "com.qti", "com.google", "com.xiaomi", "com.mi",
-            "com.fingerprints", "com.quicinc", "org.aurora", "org.codeaurora", "org.codeaurora", "com.lbe", "com.android", "com.meizu"};
+            "com.fingerprints", "com.quicinc", "org.aurora", "org.codeaurora", "org.codeaurora", "com.lbe", "com.android", "com.meizu", "com.miv_sher"};
 
-    public static final String[] BLACKLISTED_PACKAGES = {"com.android.settings", "com.google.android.gms", "com.miv_sher"};
+    public static final String[] BLACKLISTED_PACKAGES = {"com.android.settings", "com.google.android.gms"};
 
 
     @SuppressWarnings("ResourceType")
@@ -51,9 +52,11 @@ public class UsageStatsUtils {
         return usageStatsList;
     }
 
+
     public static String getUsageStatsString(long startTime) {
         List<UsageStats> usageStatsList = getUsageStatsList(startTime);
-        String result = "Range start: " + dateFormat.format(startTime) + "\n" + "Range end:" + dateFormat.format(Calendar.getInstance().getTimeInMillis())  + "\n\n";
+        String result = "";
+                //"Range start: " + dateFormat.format(startTime) + "\n" + "Range end:" + dateFormat.format(Calendar.getInstance().getTimeInMillis())  + "\n\n";
         for (UsageStats u : usageStatsList) {
             Log.d(TAG, "Pkg: " + u.getPackageName() + "\t" + "ForegroundTime: "
                     + u.getTotalTimeInForeground() + "\t" + "LastUsedTime: "
@@ -98,6 +101,7 @@ public class UsageStatsUtils {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
                             Intent intent = new Intent(Settings.ACTION_USAGE_ACCESS_SETTINGS);
+                            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                             ApplicationLoader.getContext().startActivity(intent);
                             dialog.cancel();
                         }
@@ -138,9 +142,8 @@ public class UsageStatsUtils {
         }
 
         // Verify that access is possible. Some devices "lie" and return MODE_ALLOWED even when it's not.
-        final long now = System.currentTimeMillis();
-        final UsageStatsManager mUsageStatsManager = (UsageStatsManager) context.getSystemService(Context.USAGE_STATS_SERVICE);
-        final List<UsageStats> stats = mUsageStatsManager.queryUsageStats(UsageStatsManager.INTERVAL_DAILY, now - 1000 * 10, now);
+        Date date = new Date();
+        final List<UsageStats> stats = getUsageStatsList(date.getTime() - 10 * 1000 * 60);
         return (stats != null && !stats.isEmpty());
     }
 

@@ -19,7 +19,7 @@ public interface ProfileDao {
     void deleteProfile(Profile profile);
 
     @Query("SELECT * FROM profiles")
-    LiveData<Profile> getProfile();
+    Profile getProfile();
 
     @Query("SELECT COUNT(*) FROM profiles")
     int getCount();

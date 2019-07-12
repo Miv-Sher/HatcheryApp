@@ -26,7 +26,7 @@ public interface BeastDao {
     Beast getBeastByKey(String beastKey);
 
     @Query("SELECT * FROM beasts ORDER BY `key` DESC")
-    LiveData<List<Beast>> getAll();
+    List<Beast> getAll();
 
     @Query("DELETE FROM beasts")
     int deleteAll();
