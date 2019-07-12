@@ -6,7 +6,8 @@ import androidx.room.PrimaryKey;
 
 @Entity(tableName = "beasts")
 public class Beast {
-    @PrimaryKey @NonNull
+    @PrimaryKey
+    @NonNull
     private String key;
     private int resId;
     private String description;

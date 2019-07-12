@@ -1,10 +1,8 @@
 package com.miv_sher.hatcheryapp.database.converters;
 
-import android.util.Log;
+import androidx.room.TypeConverter;
 
 import java.util.Date;
-
-import androidx.room.TypeConverter;
 
 public class DateConverter {
     @TypeConverter
@@ -13,7 +11,7 @@ public class DateConverter {
     }
 
     @TypeConverter
-    public static Long toTimestamp(Date date){
+    public static Long toTimestamp(Date date) {
         return date == null ? null : date.getTime();
     }
 }

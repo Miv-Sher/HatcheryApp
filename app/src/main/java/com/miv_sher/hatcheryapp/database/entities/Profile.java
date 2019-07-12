@@ -32,6 +32,10 @@ public class Profile {
         return key;
     }
 
+    public void setKey(@NonNull String key) {
+        this.key = key;
+    }
+
     public long getCurrentSessionID() {
         return currentSessionID;
     }
@@ -40,16 +44,12 @@ public class Profile {
         return coinsCount;
     }
 
-    public void setKey(@NonNull String key) {
-        this.key = key;
+    public void setCoinsCount(int coinsCount) {
+        this.coinsCount = coinsCount;
     }
 
     public void setCurrentSession(long currentSessionID) {
         this.currentSessionID = currentSessionID;
-    }
-
-    public void setCoinsCount(int coinsCount) {
-        this.coinsCount = coinsCount;
     }
 
     @Override

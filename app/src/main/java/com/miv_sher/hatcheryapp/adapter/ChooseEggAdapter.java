@@ -46,7 +46,7 @@ public final class ChooseEggAdapter extends RecyclerView.Adapter<RecyclerView.Vi
 
     }
 
-    public Egg getCenterItem(){
+    public Egg getCenterItem() {
         return eggItemList.get(carouselLayoutManager.getCenterItemPosition());
     }
 
@@ -79,8 +79,8 @@ public final class ChooseEggAdapter extends RecyclerView.Adapter<RecyclerView.Vi
 
         public RowNewsViewHolder(View itemView) {
             super(itemView);
-            cItem1 = (TextView) itemView.findViewById(R.id.c_item_1);
-            pp = (ImageView) itemView.findViewById(R.id.profilePicture);
+            cItem1 = itemView.findViewById(R.id.c_item_1);
+            pp = itemView.findViewById(R.id.profilePicture);
         }
     }
 }

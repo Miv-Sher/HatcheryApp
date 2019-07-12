@@ -1,5 +1,7 @@
 package com.miv_sher.hatcheryapp.database;
 
+import android.util.Log;
+
 import androidx.lifecycle.LiveData;
 
 import com.miv_sher.hatcheryapp.database.entities.Beast;
@@ -14,13 +16,19 @@ import java.util.concurrent.Executors;
 
 
 public class AppRepository {
+    private static AppRepository ourInstance;
+    private final String TAG = "AppRepository";
     public LiveData<List<Session>> mSessions;
     public LiveData<List<Egg>> mEggs;
     public LiveData<List<Beast>> mBeasts;
-
-    private static AppRepository ourInstance;
     private AppDatabase mDb;
     private Executor executor = Executors.newSingleThreadExecutor();
+
+
+    private AppRepository() {
+        mDb = AppDatabase.getInstance();
+        //mSessions = getAllSessions();
+    }
 
     public static AppRepository getInstance() {
         if (ourInstance == null) {
@@ -29,23 +37,16 @@ public class AppRepository {
         return ourInstance;
     }
 
-    private AppRepository() {
-        mDb = AppDatabase.getInstance();
-        //mSessions = getAllSessions();
-    }
-
     public void addSampleData() {
         executor.execute(new Runnable() {
             @Override
             public void run() {
-                if (AppRepository.getInstance().getProfile() == null)
-                    AppRepository.getInstance().insertProfile(new Profile("phone_imei", -1, 100));
-                if (AppRepository.getInstance().getAllSessions().size() == 0)
+                if (getProfile() == null)
+                    insertProfile(new Profile("phone_imei", -1, 100));
+                if (getAllSessions().size() == 0)
                     mDb.sessionDao().insertAll(SampleData.getSessions());
-                //if (AppRepository.getInstance().getAllEggs().size() == 0)
-                    mDb.eggDao().insertAll(SampleData.getEggs());
-               // if (AppRepository.getInstance().getAllBeasts().size() == 0)
-                    mDb.beastDao().insertAll(SampleData.getBeasts());
+                mDb.eggDao().insertAll(SampleData.getEggs());
+                mDb.beastDao().insertAll(SampleData.getBeasts());
             }
         });
     }
@@ -76,9 +77,11 @@ public class AppRepository {
         executor.execute(new Runnable() {
             @Override
             public void run() {
-                if(session != null) {
+                if (session != null) {
                     long id = mDb.sessionDao().insertSession(session);
                     session.setId(id);
+                    Log.d(TAG, "insertSession: " + session + " " + id);
+
                 }
             }
         });

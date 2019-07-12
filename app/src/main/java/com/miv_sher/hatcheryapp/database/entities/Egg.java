@@ -36,18 +36,6 @@ public class Egg {
         return description;
     }
 
-    public void setRevision(int revision) {
-        this.revision = revision;
-    }
-
-    public void setBoughtCount(int boughtCount) {
-        this.boughtCount = boughtCount;
-    }
-
-    public void setTags(List<String> tags) {
-        this.tags = tags;
-    }
-
     @NonNull
     public String getKey() {
         return key;
@@ -55,6 +43,10 @@ public class Egg {
 
     public List<String> getTags() {
         return tags;
+    }
+
+    public void setTags(List<String> tags) {
+        this.tags = tags;
     }
 
     public int getRarity() {
@@ -65,12 +57,20 @@ public class Egg {
         return revision;
     }
 
+    public void setRevision(int revision) {
+        this.revision = revision;
+    }
+
     public int getResId() {
         return resId;
     }
 
     public int getBoughtCount() {
         return boughtCount;
+    }
+
+    public void setBoughtCount(int boughtCount) {
+        this.boughtCount = boughtCount;
     }
 
     @Override

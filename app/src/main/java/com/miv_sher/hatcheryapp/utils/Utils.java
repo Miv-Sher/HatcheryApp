@@ -10,8 +10,6 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.PorterDuff;
 import android.graphics.PorterDuffColorFilter;
-import android.os.Handler;
-import android.os.Looper;
 import android.view.ViewTreeObserver;
 import android.widget.ImageView;
 
@@ -36,24 +34,24 @@ public class Utils {
     public static void setScaledImage(ImageView imageView, final int resId, boolean needTintTiWhite) {
         //Handler handler = new Handler(Looper.getMainLooper());
         final ImageView iv = imageView;
-       // handler.post(new Runnable() {
-         //   @Override
-         //   public void run() {
-                ViewTreeObserver viewTreeObserver = iv.getViewTreeObserver();
-                viewTreeObserver.addOnPreDrawListener(new ViewTreeObserver.OnPreDrawListener() {
-                    public boolean onPreDraw() {
-                        iv.getViewTreeObserver().removeOnPreDrawListener(this);
-                        int imageViewHeight = iv.getMeasuredHeight();
-                        int imageViewWidth = iv.getMeasuredWidth();
-                        Bitmap bitmap =  decodeSampledBitmapFromResource(iv.getContext().getResources(),
-                                resId, imageViewWidth, imageViewHeight);
-                        if(needTintTiWhite){
-                            bitmap = tintImageToWhite(bitmap);
-                        }
-                        iv.setImageBitmap(bitmap);
-                        return true;
-          //          }
-         //       });
+        // handler.post(new Runnable() {
+        //   @Override
+        //   public void run() {
+        ViewTreeObserver viewTreeObserver = iv.getViewTreeObserver();
+        viewTreeObserver.addOnPreDrawListener(new ViewTreeObserver.OnPreDrawListener() {
+            public boolean onPreDraw() {
+                iv.getViewTreeObserver().removeOnPreDrawListener(this);
+                int imageViewHeight = iv.getMeasuredHeight();
+                int imageViewWidth = iv.getMeasuredWidth();
+                Bitmap bitmap = decodeSampledBitmapFromResource(iv.getContext().getResources(),
+                        resId, imageViewWidth, imageViewHeight);
+                if (needTintTiWhite) {
+                    bitmap = tintImageToWhite(bitmap);
+                }
+                iv.setImageBitmap(bitmap);
+                return true;
+                //          }
+                //       });
             }
         });
 
@@ -84,6 +82,7 @@ public class Utils {
         canvas.drawBitmap(bitmap, 0, 0, paint);
         return bitmapResult;
     }
+
     private static int calculateInSampleSize(
             BitmapFactory.Options options, int reqWidth, int reqHeight) {
 

@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.os.Handler;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -34,13 +35,19 @@ import java.util.Date;
 
 
 public class HatchibatorFragment extends Fragment {
-    private HatchibatorViewModel mHatchibatorVM;
-    private TextView timerTextView;
-    private ImageView eggImageView, hatchingEffectsImageView;
+    private final String TAG = "HatchibatorFragment";
     TextView inspiringTextView;
     Button startButton, abortOrGiveUpButton, restartButton;
-    private CountDownTimer countDownTimer;
     Handler handler = new Handler();
+    Session currentSession = null;
+    boolean needShakeAnim = false;
+    private HatchibatorViewModel mHatchibatorVM;
+    ChooseEggDialog.EggDialogListener eggDialogListener = new ChooseEggDialog.EggDialogListener() {
+        @Override
+        public void onSessionStarted(Session session) {
+            mHatchibatorVM.saveCurrentSession(session);
+        }
+    };
     View.OnClickListener onEggClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
@@ -48,15 +55,9 @@ public class HatchibatorFragment extends Fragment {
             chooseEggDialog.show(getFragmentManager(), ChooseEggDialog.class.getName());
         }
     };
-    Session currentSession = null;
-    boolean needShakeAnim = false;
-
-    ChooseEggDialog.EggDialogListener eggDialogListener = new ChooseEggDialog.EggDialogListener() {
-        @Override
-        public void onSessionStarted(Session session) {
-            mHatchibatorVM.saveCurrentSession(session);
-        }
-    };
+    private TextView timerTextView;
+    private ImageView eggImageView, hatchingEffectsImageView;
+    private CountDownTimer countDownTimer;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -126,6 +127,7 @@ public class HatchibatorFragment extends Fragment {
         mHatchibatorVM.mLiveSession.observe(this, new Observer<Session>() {
             @Override
             public void onChanged(Session session) {
+                Log.d(TAG, "onChanged: " + (session != null ? session.toString() : "null session"));
                 currentSession = session;
                 refreshFragment();
             }
@@ -135,7 +137,7 @@ public class HatchibatorFragment extends Fragment {
     private void refreshFragment() {
         if (currentSession == null) {
             restartButton.setVisibility(View.INVISIBLE);
-            Utils.setScaledImage(eggImageView, R.drawable.egg, true);
+            Utils.setScaledImage(eggImageView, R.drawable.unknown_egg, true);
             eggImageView.setOnClickListener(onEggClickListener);
             timerTextView.setText("00:00");
             timerTextView.setVisibility(View.INVISIBLE);
@@ -173,26 +175,32 @@ public class HatchibatorFragment extends Fragment {
     private void checkForViolation() {
         String res = UsageStatsUtils.getUsageStatsString(currentSession.getStartDate().getTime());
         if (!TextUtils.isEmpty(res)) {
-            countDownTimer.cancel();
-            mHatchibatorVM.saveCurrentSession(null);
-            final AlertDialog dialog = new AlertDialog.Builder(getActivity())
-                    .setTitle(ApplicationLoader.getContext().getString(R.string.ooops))
-                    .setMessage(getActivity().getString(R.string.violated_egg_terms) + "\n\n" + res)
-                    .setPositiveButton(getActivity().getString(R.string.ok), new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                        }
-                    })
-                    .create();
-            dialog.setCanceledOnTouchOutside(true);
-            dialog.setOnShowListener(new DialogInterface.OnShowListener() {
-                @Override
-                public void onShow(DialogInterface arg0) {
-                    dialog.getButton(AlertDialog.BUTTON_NEGATIVE).setTextColor(ApplicationLoader.getContext().getResources().getColor(R.color.colorPrimary));
-                    dialog.getButton(AlertDialog.BUTTON_POSITIVE).setTextColor(ApplicationLoader.getContext().getResources().getColor(R.color.colorPrimary));
-                }
-            });
-            dialog.show();
+            if (ApplicationLoader.getInstance().appIsBackground()) {
+                //Intent intent = new Intent(getActivity(), MainActivity.class);
+                //intent.addFlags(Intent.FLAG_ACTIVITY_BROUGHT_TO_FRONT);
+                //startActivity(intent);
+            } else {
+                countDownTimer.cancel();
+                mHatchibatorVM.saveCurrentSession(null);
+                final AlertDialog dialog = new AlertDialog.Builder(getActivity())
+                        .setTitle(ApplicationLoader.getContext().getString(R.string.ooops))
+                        .setMessage(getActivity().getString(R.string.violated_egg_terms) + "\n\n" + res)
+                        .setPositiveButton(getActivity().getString(R.string.ok), new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                            }
+                        })
+                        .create();
+                dialog.setCanceledOnTouchOutside(true);
+                dialog.setOnShowListener(new DialogInterface.OnShowListener() {
+                    @Override
+                    public void onShow(DialogInterface arg0) {
+                        dialog.getButton(AlertDialog.BUTTON_NEGATIVE).setTextColor(ApplicationLoader.getContext().getResources().getColor(R.color.colorPrimary));
+                        dialog.getButton(AlertDialog.BUTTON_POSITIVE).setTextColor(ApplicationLoader.getContext().getResources().getColor(R.color.colorPrimary));
+                    }
+                });
+                dialog.show();
+            }
         }
     }
 
@@ -247,7 +255,6 @@ public class HatchibatorFragment extends Fragment {
 
             @Override
             public void onAnimationFinish() {
-                // Utils.setScaledImage(eggImageView, R.drawable.tiger, true);
                 Utils.setScaledImage(eggImageView, R.drawable.tiger, false);
                 hatchingEffectsImageView.setVisibility(View.INVISIBLE);
             }

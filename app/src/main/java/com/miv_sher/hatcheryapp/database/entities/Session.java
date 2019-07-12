@@ -6,29 +6,29 @@ import androidx.room.PrimaryKey;
 
 import java.util.Date;
 
+import static com.miv_sher.hatcheryapp.Constants.SESSION_PHASE_ON_GOING;
+
 @Entity(tableName = "sessions")
 public class Session {
+    String beastKey;
     @PrimaryKey(autoGenerate = true)
     private long id;
     private Date startDate;
     private Date endDate;
     private String eggKey;
-    private boolean wasResultShown;
-    private boolean isHatcherySucceed;
-    private String beastType;
+    private String phase;
 
     @Ignore
     public Session() {
     }
 
-    public Session(long id, Date startDate, Date endDate, String eggKey, boolean wasResultShown, boolean isHatcherySucceed, String beastType) {
+    public Session(long id, Date startDate, Date endDate, String eggKey, String phase, String beastKey) {
         this.id = id;
         this.startDate = startDate;
         this.endDate = endDate;
         this.eggKey = eggKey;
-        this.wasResultShown = wasResultShown;
-        this.isHatcherySucceed = isHatcherySucceed;
-        this.beastType = beastType;
+        this.phase = phase;
+        this.beastKey = beastKey;
     }
 
     @Ignore
@@ -36,22 +36,10 @@ public class Session {
         this.startDate = startDate;
         this.endDate = endDate;
         this.eggKey = eggKey;
-        wasResultShown = false;
-        isHatcherySucceed = false;
-        beastType = null;
+        phase = SESSION_PHASE_ON_GOING;
+        beastKey = null;
     }
 
-    public void setWasResultShown(boolean wasResultShown) {
-        this.wasResultShown = wasResultShown;
-    }
-
-    public void setHatcherySucceed(boolean hatcherySucceed) {
-        isHatcherySucceed = hatcherySucceed;
-    }
-
-    public void setBeastType(String beastType) {
-        this.beastType = beastType;
-    }
 
     public long getId() {
         return id;
@@ -73,16 +61,20 @@ public class Session {
         return eggKey;
     }
 
-    public boolean isWasResultShown() {
-        return wasResultShown;
+    public String getPhase() {
+        return phase;
     }
 
-    public boolean isHatcherySucceed() {
-        return isHatcherySucceed;
+    public void setPhase(String phase) {
+        this.phase = phase;
     }
 
-    public String getBeastType() {
-        return beastType;
+    public String getBeastKey() {
+        return beastKey;
+    }
+
+    public void setBeastKey(String beastKey) {
+        this.beastKey = beastKey;
     }
 
     @Override
@@ -90,7 +82,7 @@ public class Session {
         return "Session{" +
                 "id=" + id +
                 ", startdate=" + startDate +
-                ", endDate=" + endDate + ", eggKey='" + eggKey + '\'' +
+                ", endDate=" + endDate + ", eggKey='" + eggKey + ", phase='" + phase + ", beastKey='" + beastKey + '\'' +
                 '}';
     }
 }

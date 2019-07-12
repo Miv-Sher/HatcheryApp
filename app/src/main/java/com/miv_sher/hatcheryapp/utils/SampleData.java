@@ -1,6 +1,5 @@
 package com.miv_sher.hatcheryapp.utils;
 
-import com.miv_sher.hatcheryapp.Constants;
 import com.miv_sher.hatcheryapp.R;
 import com.miv_sher.hatcheryapp.database.entities.Beast;
 import com.miv_sher.hatcheryapp.database.entities.Egg;
@@ -11,7 +10,6 @@ import java.util.Date;
 import java.util.List;
 
 import static com.miv_sher.hatcheryapp.Constants.RARITY_COMMON;
-import static com.miv_sher.hatcheryapp.Constants.RARITY_EPIC;
 import static com.miv_sher.hatcheryapp.Constants.RARITY_LEGENDARY;
 import static com.miv_sher.hatcheryapp.Constants.RARITY_RARE;
 import static com.miv_sher.hatcheryapp.Constants.RARITY_UNCOMMON;
@@ -66,7 +64,7 @@ public class SampleData {
         eggsEntityList.add(new Egg(EGG_KEY_TWO, new ArrayList(), RARITY_UNCOMMON, 0, R.drawable.base_egg, 3, "Необычное яйцо"));
         eggsEntityList.add(new Egg(EGG_KEY_THREE, new ArrayList(), RARITY_RARE, 0, R.drawable.kitten_egg, 2, "Редкое яйцо"));
         eggsEntityList.add(new Egg(EGG_KEY_FOUR, new ArrayList(), RARITY_LEGENDARY, 0, R.drawable.magic_egg, 1, "Ле-ген-дар-ное яйцо"));
-        eggsEntityList.add(new Egg(EGG_KEY_FIVE, new ArrayList(), RARITY_EPIC, 0, R.drawable.egg_five, 0, "Мифическое яйцо"));
+        //eggsEntityList.add(new Egg(EGG_KEY_FIVE, new ArrayList(), RARITY_EPIC, 0, R.drawable.egg_five, 0, "Мифическое яйцо"));
         return eggsEntityList;
     }
 

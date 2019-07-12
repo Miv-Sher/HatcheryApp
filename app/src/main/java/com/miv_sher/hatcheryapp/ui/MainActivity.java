@@ -14,22 +14,17 @@ import com.miv_sher.hatcheryapp.R;
 import com.miv_sher.hatcheryapp.database.AppRepository;
 import com.miv_sher.hatcheryapp.utils.Utils;
 
-import java.util.concurrent.Executor;
-import java.util.concurrent.Executors;
-
 public class MainActivity extends AppCompatActivity {
 
-    BottomNavigationView navView;
     final Fragment hatchibatorFragment = new HatchibatorFragment();
     final Fragment storeFragment = new StoreFragment();
     final Fragment collectionsFragment = new CollectionsFragment();
     final Fragment statisticsFragment = new StatisticsFragment();
     final FragmentManager fragmentManager = getSupportFragmentManager();
+    BottomNavigationView navView;
     Fragment activeFragment = hatchibatorFragment;
-    private ImageView backgroundImageView;
     AppRepository appRepository = AppRepository.getInstance();
-
-
+    private ImageView backgroundImageView;
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
 

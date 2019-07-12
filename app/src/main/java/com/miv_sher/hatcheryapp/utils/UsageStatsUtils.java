@@ -10,7 +10,6 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Build;
 import android.provider.Settings;
-import android.util.Log;
 
 import androidx.annotation.NonNull;
 
@@ -26,13 +25,11 @@ import java.util.concurrent.TimeUnit;
 import static com.miv_sher.hatcheryapp.utils.Utils.getAppName;
 
 public class UsageStatsUtils {
-    private static final SimpleDateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy HH:mm:ss");
     public static final String TAG = UsageStatsUtils.class.getSimpleName();
     public static final String[] WHITELISTED_PACKAGES = {"com.google", "com.miui", "com.qualcomm", "com.qti", "com.google", "com.xiaomi", "com.mi",
             "com.fingerprints", "com.quicinc", "org.aurora", "org.codeaurora", "org.codeaurora", "com.lbe", "com.android", "com.meizu", "com.miv_sher"};
-
     public static final String[] BLACKLISTED_PACKAGES = {"com.android.settings", "com.google.android.gms"};
-
+    private static final SimpleDateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy HH:mm:ss");
 
     @SuppressWarnings("ResourceType")
     private static UsageStatsManager getUsageStatsManager(Context context) {
@@ -45,8 +42,8 @@ public class UsageStatsUtils {
         Calendar calendar = Calendar.getInstance();
         long endTime = calendar.getTimeInMillis();
 
-        Log.d(TAG, "Range start:" + dateFormat.format(startTime));
-        Log.d(TAG, "Range end:" + dateFormat.format(endTime));
+        // Log.d(TAG, "Range start:" + dateFormat.format(startTime));
+        // Log.d(TAG, "Range end:" + dateFormat.format(endTime));
 
         List<UsageStats> usageStatsList = usm.queryUsageStats(UsageStatsManager.INTERVAL_DAILY, startTime, endTime);
         return usageStatsList;
@@ -56,11 +53,11 @@ public class UsageStatsUtils {
     public static String getUsageStatsString(long startTime) {
         List<UsageStats> usageStatsList = getUsageStatsList(startTime);
         String result = "";
-                //"Range start: " + dateFormat.format(startTime) + "\n" + "Range end:" + dateFormat.format(Calendar.getInstance().getTimeInMillis())  + "\n\n";
+        //"Range start: " + dateFormat.format(startTime) + "\n" + "Range end:" + dateFormat.format(Calendar.getInstance().getTimeInMillis())  + "\n\n";
         for (UsageStats u : usageStatsList) {
-            Log.d(TAG, "Pkg: " + u.getPackageName() + "\t" + "ForegroundTime: "
+           /* Log.d(TAG, "Pkg: " + u.getPackageName() + "\t" + "ForegroundTime: "
                     + u.getTotalTimeInForeground() + "\t" + "LastUsedTime: "
-                    + dateFormat.format(u.getLastTimeUsed()));
+                    + dateFormat.format(u.getLastTimeUsed()));*/
 
             if (isPackageWhiteListed(u, startTime))
                 continue;
@@ -77,7 +74,7 @@ public class UsageStatsUtils {
         if (usageStats.getTotalTimeInForeground() == 0)
             return true;
         //for apps usage before egg put in hatchibator
-        if(usageStats.getLastTimeUsed() < startTime)
+        if (usageStats.getLastTimeUsed() < startTime)
             return true;
         //if user goes to settings - egg dies
         for (int i = 0; i < BLACKLISTED_PACKAGES.length; i++) {

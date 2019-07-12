@@ -1,15 +1,16 @@
 package com.miv_sher.hatcheryapp.utils;
+
 import java.util.Date;
 
 public class TimeUtils {
     public static final int SECONDS_IN_MINUTE = 60;
 
-    public static Date addMinutesToDate(Date date, int minutes){
-        return new Date(date.getTime() + minutes*60*1000);
+    public static Date addMinutesToDate(Date date, int minutes) {
+        return new Date(date.getTime() + minutes * 60 * 1000);
     }
 
-    public static int getSecondsFromDateInterval(Date startDate, Date endDate){
-        return (int) (endDate.getTime() - startDate.getTime())/1000;
+    public static int getSecondsFromDateInterval(Date startDate, Date endDate) {
+        return (int) (endDate.getTime() - startDate.getTime()) / 1000;
     }
 
     public static String getTimerTextFromSecons(int timeInSeconds) {

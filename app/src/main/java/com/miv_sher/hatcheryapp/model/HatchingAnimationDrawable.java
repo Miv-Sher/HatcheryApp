@@ -5,7 +5,9 @@ import android.os.Handler;
 
 public abstract class HatchingAnimationDrawable extends AnimationDrawable {
 
-    /** Handles the animation callback. */
+    /**
+     * Handles the animation callback.
+     */
     Handler mAnimationHandler;
 
     public HatchingAnimationDrawable(AnimationDrawable aniDrawable) {
@@ -59,10 +61,12 @@ public abstract class HatchingAnimationDrawable extends AnimationDrawable {
      * Called when the animation finishes.
      */
     public abstract void onAnimationFinish();
+
     /**
      * Called when the animation starts.
      */
     public abstract void onAnimationStart();
+
     public abstract void onFrameChanged(int frameNumber);
 
 }

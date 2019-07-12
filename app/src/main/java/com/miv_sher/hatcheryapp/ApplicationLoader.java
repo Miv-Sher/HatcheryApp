@@ -10,7 +10,6 @@ import android.os.Handler;
 
 import com.crashlytics.android.Crashlytics;
 import com.miv_sher.hatcheryapp.database.AppRepository;
-import com.miv_sher.hatcheryapp.database.entities.Profile;
 
 import io.fabric.sdk.android.Fabric;
 
