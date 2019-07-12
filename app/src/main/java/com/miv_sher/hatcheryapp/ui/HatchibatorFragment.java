@@ -30,14 +30,15 @@ import com.miv_sher.hatcheryapp.utils.UsageStatsUtils;
 import com.miv_sher.hatcheryapp.utils.Utils;
 import com.miv_sher.hatcheryapp.viewmodel.HatchibatorViewModel;
 
+import java.util.Date;
+
 
 public class HatchibatorFragment extends Fragment {
     private HatchibatorViewModel mHatchibatorVM;
     private TextView timerTextView;
     private ImageView eggImageView, hatchingEffectsImageView;
     TextView inspiringTextView;
-    Button startButton;
-    Button abortOrGiveUpButton;
+    Button startButton, abortOrGiveUpButton, restartButton;
     private CountDownTimer countDownTimer;
     Handler handler = new Handler();
     View.OnClickListener onEggClickListener = new View.OnClickListener() {
@@ -66,6 +67,7 @@ public class HatchibatorFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_hatchibator, container, false);
+        initVM();
         return view;
     }
 
@@ -77,7 +79,6 @@ public class HatchibatorFragment extends Fragment {
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        initVM();
         timerTextView = view.findViewById(R.id.timerTextView);
         inspiringTextView = view.findViewById(R.id.inspiringTextView);
         inspiringTextView.setText("Никогда не сдавайся!");
@@ -93,7 +94,14 @@ public class HatchibatorFragment extends Fragment {
                 mHatchibatorVM.saveCurrentSession(null);
             }
         });
-        refreshFragment();
+        restartButton = view.findViewById(R.id.restartButton);
+        restartButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                countDownTimer.cancel();
+                mHatchibatorVM.saveCurrentSession(null);
+            }
+        });
     }
 
 
@@ -122,25 +130,32 @@ public class HatchibatorFragment extends Fragment {
                 refreshFragment();
             }
         });
-        mHatchibatorVM.loadData();
     }
 
     private void refreshFragment() {
         if (currentSession == null) {
+            restartButton.setVisibility(View.INVISIBLE);
             Utils.setScaledImage(eggImageView, R.drawable.egg, true);
             eggImageView.setOnClickListener(onEggClickListener);
             timerTextView.setText("00:00");
+            timerTextView.setVisibility(View.INVISIBLE);
+            abortOrGiveUpButton.setVisibility(View.INVISIBLE);
         } else {
-            //Egg currentEgg = new Egg(EGG_KEY_ONE, new ArrayList(), RARITY_COMMON, 0, R.drawable.egg_one, 5, "Обычное яйцо");
+            restartButton.setVisibility(View.INVISIBLE);
             Egg currentEgg = mHatchibatorVM.currentEgg;
             Utils.setScaledImage(eggImageView, currentEgg.getResId(), false);
             eggImageView.setOnClickListener(null);
-            final int time = 5;
-            //TimeUtils.getSecondsFromDateInterval(new Date(), currentSession.getEndDate());
+            abortOrGiveUpButton.setText(R.string.cancel);
+            abortOrGiveUpButton.setVisibility(View.VISIBLE);
+            timerTextView.setVisibility(View.VISIBLE);
+            final int time = TimeUtils.getSecondsFromDateInterval(new Date(), currentSession.getEndDate());
             countDownTimer = new CountDownTimer(time * 1000, 1000) {
                 int currentTime = time;
 
                 public void onTick(long millisUntilFinished) {
+                    if (time - millisUntilFinished / 1000 > 10) {
+                        abortOrGiveUpButton.setText(R.string.give_up_egg);
+                    }
                     timerTextView.setText(TimeUtils.getTimerTextFromSecons(currentTime));
                     currentTime--;
                     checkForViolation();
@@ -191,8 +206,13 @@ public class HatchibatorFragment extends Fragment {
 
             @Override
             public void onAnimationEnd(Animation animation) {
-                if (needShakeAnim)
-                    eggImageView.startAnimation(animShake);
+                handler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        if (needShakeAnim)
+                            eggImageView.startAnimation(animShake);
+                    }
+                }, 1500);
 
             }
 
@@ -201,6 +221,8 @@ public class HatchibatorFragment extends Fragment {
 
             }
         });
+        abortOrGiveUpButton.setVisibility(View.INVISIBLE);
+        timerTextView.setVisibility(View.INVISIBLE);
         eggImageView.startAnimation(animShake);
         eggImageView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -213,6 +235,8 @@ public class HatchibatorFragment extends Fragment {
     }
 
     private void hatchEgg() {
+        restartButton.setVisibility(View.VISIBLE);
+        eggImageView.setOnClickListener(null);
         HatchingAnimationDrawable cad = new HatchingAnimationDrawable(
                 (AnimationDrawable) getResources().getDrawable(
                         R.drawable.hatching_animation)) {
@@ -223,7 +247,7 @@ public class HatchibatorFragment extends Fragment {
 
             @Override
             public void onAnimationFinish() {
-                Utils.setScaledImage(eggImageView, R.drawable.tiger, true);
+                // Utils.setScaledImage(eggImageView, R.drawable.tiger, true);
                 Utils.setScaledImage(eggImageView, R.drawable.tiger, false);
                 hatchingEffectsImageView.setVisibility(View.INVISIBLE);
             }
@@ -237,7 +261,6 @@ public class HatchibatorFragment extends Fragment {
         // Set the views drawable to our custom drawable
         hatchingEffectsImageView.setBackground(cad);
         hatchingEffectsImageView.setVisibility(View.VISIBLE);
-
         // Start the animation
         cad.start();
 

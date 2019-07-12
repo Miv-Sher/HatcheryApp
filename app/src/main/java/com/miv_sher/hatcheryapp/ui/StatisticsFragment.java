@@ -37,8 +37,6 @@ public class StatisticsFragment extends Fragment {
     @Override
     public void onStart() {
         super.onStart();
-       // Intent intent = new Intent(Settings.ACTION_USAGE_ACCESS_SETTINGS);
-       // startActivity(intent);
         loadAppList();
     }
 
@@ -46,7 +44,7 @@ public class StatisticsFragment extends Fragment {
         checkAndAskPermission(getActivity());
         Date date = new Date();
         String res = UsageStatsUtils.getUsageStatsString(date.getTime() - 10 * 1000 * 60);
-        statsTextView.setText(res);
+        //statsTextView.setText(res);
     }
 
     @Override

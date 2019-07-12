@@ -11,6 +11,7 @@ import android.graphics.Paint;
 import android.graphics.PorterDuff;
 import android.graphics.PorterDuffColorFilter;
 import android.os.Handler;
+import android.os.Looper;
 import android.view.ViewTreeObserver;
 import android.widget.ImageView;
 
@@ -33,11 +34,11 @@ public class Utils {
     }
 
     public static void setScaledImage(ImageView imageView, final int resId, boolean needTintTiWhite) {
-        Handler handler = new Handler();
+        //Handler handler = new Handler(Looper.getMainLooper());
         final ImageView iv = imageView;
-        handler.post(new Runnable() {
-            @Override
-            public void run() {
+       // handler.post(new Runnable() {
+         //   @Override
+         //   public void run() {
                 ViewTreeObserver viewTreeObserver = iv.getViewTreeObserver();
                 viewTreeObserver.addOnPreDrawListener(new ViewTreeObserver.OnPreDrawListener() {
                     public boolean onPreDraw() {
@@ -49,12 +50,10 @@ public class Utils {
                         if(needTintTiWhite){
                             bitmap = tintImageToWhite(bitmap);
                         }
-                        iv.setImageBitmap(
-                                bitmap
-                               );
+                        iv.setImageBitmap(bitmap);
                         return true;
-                    }
-                });
+          //          }
+         //       });
             }
         });
 

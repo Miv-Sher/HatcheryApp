@@ -24,6 +24,7 @@ public class HatchibatorViewModel extends AndroidViewModel {
     public HatchibatorViewModel(@NonNull Application application) {
         super(application);
         mRepository = AppRepository.getInstance();
+        loadData();
     }
 
     public void loadData() {

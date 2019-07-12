@@ -28,4 +28,10 @@
     <color name="rarity_legendary">#e69d29</color>
     <color name="rarity_epic">#9818b8</color>
 
+    <color name="rarity_common_transparent">#73FFFFFF</color>
+    <color name="rarity_uncommon_transparent">#738bc34a</color>
+    <color name="rarity_rare_transparent">#731381b0</color>
+    <color name="rarity_legendary_transparent">#73e69d29</color>
+    <color name="rarity_epic_transparent">#739818b8</color>
+
 </resources>

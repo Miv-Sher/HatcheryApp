@@ -45,6 +45,21 @@
         tools:text="34:00" />
 
     <Button
+        android:id="@+id/restartButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/eggImageView"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="32dp"
+        android:background="@drawable/button_stroke_background"
+        android:minWidth="0dp"
+        android:minHeight="0dp"
+        android:text="@string/start_new_egg"
+        android:textAppearance="@style/TextAppearance.AppCompat.Small"
+        android:textColor="@color/black"
+        android:visibility="gone" />
+
+    <Button
         android:id="@+id/abortButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
